@@ -1,123 +1,79 @@
 import math
 
-# Given values
-A = 9
-B = 7
-C = 4
-X = 6
+print("Algebra Calculus 1")
+print("""
+1. Solve the linear equation (ax + b = c)
+2. Solve the quadratic equation (ax^2 + bx + c = 0)
+3. evaluate f(x) = ax^2 + bx + c
+4. Find the derivative f'(x) at a point
+5. Estimate a limit as a x approaches a value
+6. Compute a definite integral of f(x)
+7. quit
+""")
 
+choice = input("Enter a number: ").strip()
 
-def f(x):
-    """Evaluate f(x) = A*x^2 + B*x + C."""
-    return A * x ** 2 + B * x + C
+if choice == "1":
+    a = int(input("Enter the Value of A: "))
+    b = int(input("Enter the Value of B: "))
+    c = int(input("Enter the Value of C: "))
+    print("x =", (c - b) / a)
 
-
-def derivative(x, h=1e-5):
-    """Estimate f'(x) with the central-difference formula."""
-    return (f(x + h) - f(x - h)) / (2 * h)
-
-
-def estimate_limit(point, h=1e-5):
-    """Estimate lim f(x) as x approaches point from both sides."""
-    left_value = f(point - h)
-    right_value = f(point + h)
-    return left_value, right_value, (left_value + right_value) / 2
-
-
-def definite_integral(lower, upper, intervals=10000):
-    """Estimate the integral using the trapezoidal rule."""
-    width = (upper - lower) / intervals
-    total = (f(lower) + f(upper)) / 2.0
-
-    for i in range(1, intervals):
-        total += f(lower + i * width)
-
-    return total * width
-
-
-def solve_linear():
-    # A*x + B = C
-    if A == 0:
-        if B == C:
-            print("Every value of x is a solution.")
-        else:
-            print("There is no solution.")
-    else:
-        solution = (C - B) / A
-        print("Solution to {:.0f}x + {:.0f} = {:.0f}: x = {:.6f}".format(
-            A, B, C, solution))
-
-
-def solve_quadratic():
-    # A*x^2 + B*x + C = 0
-    discriminant = B ** 2 - 4 * A * C
-    print("Discriminant = {:.2f}".format(discriminant))
+elif choice == "2":
+    a = int(input("Enter the Value of A: "))
+    b = int(input("Enter the Value of B: "))
+    c = int(input("Enter the Value of C: "))
+    discriminant = (b**2) - (4 * a * c)
 
     if discriminant > 0:
-        root1 = (-B + math.sqrt(discriminant)) / (2 * A)
-        root2 = (-B - math.sqrt(discriminant)) / (2 * A)
-        print("Two real roots: x1 = {:.6f}, x2 = {:.6f}".format(root1, root2))
+        root1 = (-b + math.sqrt(discriminant)) / (2 * a)
+        root2 = (-b - math.sqrt(discriminant)) / (2 * a)
+        print(f"Roots: x1 = {root1}, x2 = {root2}")
     elif discriminant == 0:
-        root = -B / (2 * A)
-        print("One real root: x = {:.6f}".format(root))
+        root = -b / (2 * a)
+        print(f"One root: x = {root}")
     else:
-        # math.sqrt() is used for the magnitude of the imaginary part.
-        real_part = -B / (2 * A)
-        imaginary_part = math.sqrt(-discriminant) / abs(2 * A)
-        print("No real roots.")
-        print("Complex roots: x1 = {:.6f} + {:.6f}i, x2 = {:.6f} - {:.6f}i".format(
-            real_part, imaginary_part, real_part, imaginary_part))
+        print("No real solutions (Complex/Imaginary roots).")
 
+elif choice == "3":
+    a = int(input("Enter the Value of A: "))
+    b = int(input("Enter the Value of B: "))
+    c = int(input("Enter the Value of C: "))
+    x = int(input("Enter the Value of X: "))
+    result = a * (x**2) + b * x + c
+    print(f"f({x}) = {result}")
 
-def get_number(message, default):
-    """Read a number, using a default when the user presses Enter."""
-    value = input("{} [{}]: ".format(message, default)).strip()
-    return default if value == "" else float(value)
+elif choice == "4":
+    a = int(input("Enter the Value of A: "))
+    b = int(input("Enter the Value of B: "))
+    c = int(input("Enter the Value of C: "))
+    x = float(input("Find derivative at point x = "))
+    derivative = 2 * a * x + b
+    print(f"f'({x}) = {derivative}")
 
+elif choice == "5":
+    a = int(input("Enter the Value of A: "))
+    b = int(input("Enter the Value of B: "))
+    c = int(input("Enter the Value of C: "))
+    target = float(input("Limit as x approaches = "))
+    limit = a * (target**2) + b * target + c
+    print(f"lim x->{target} f(x) = {limit}")
 
-def main():
-    print("Algebra & Calculus 1 using the math module")
-    print("f(x) = {:.0f}x^2 + {:.0f}x + {:.0f}".format(A, B, C))
-    print("Default evaluation point: x = {:.0f}".format(X))
+elif choice == "6":
+    a = int(input("Enter the Value of A: "))
+    b = int(input("Enter the Value of B: "))
+    c = int(input("Enter the Value of C: "))
+    lower = float(input("Enter lower bound: "))
+    upper = float(input("Enter upper bound: "))
 
-    while True:
-        print("\n1. Solve linear equation (a*x + b = c)")
-        print("2. Solve quadratic equation (a*x^2 + b*x + c = 0)")
-        print("3. Evaluate f(x)")
-        print("4. Find the derivative of f(x) at a point")
-        print("5. Estimate a limit as x approaches a value")
-        print("6. Compute a definite integral of f(x)")
-        print("7. Quit")
+    def F(x):
+        return (a / 3) * (x**3) + (b / 2) * (x**2) + c * x
 
-        choice = input("Choose an option: ").strip()
+    integral_value = F(upper) - F(lower)
+    print(f"Definite Integral = {integral_value}")
 
-        if choice == "1":
-            solve_linear()
-        elif choice == "2":
-            solve_quadratic()
-        elif choice == "3":
-            point = get_number("Enter x", X)
-            print("f({:.6f}) = {:.6f}".format(point, f(point)))
-        elif choice == "4":
-            point = get_number("Enter the point", X)
-            print("f'({:.6f}) ≈ {:.6f}".format(point, derivative(point)))
-        elif choice == "5":
-            point = get_number("Enter the value x approaches", X)
-            left, right, limit = estimate_limit(point)
-            print("Left-hand value  ≈ {:.6f}".format(left))
-            print("Right-hand value ≈ {:.6f}".format(right))
-            print("Estimated limit  ≈ {:.6f}".format(limit))
-        elif choice == "6":
-            lower = get_number("Enter the lower bound", 0.0)
-            upper = get_number("Enter the upper bound", X)
-            print("Estimated integral = {:.6f}".format(
-                definite_integral(lower, upper)))
-        elif choice == "7":
-            print("Goodbye!")
-            break
-        else:
-            print("Invalid choice. Select an option from 1 to 7.")
+elif choice == "7":
+    print("Goodbye!")
 
-
-if __name__ == "__main__":
-    main()
+else:
+    print("Invalid Input. Please choose from 1 to 7.")
